@@ -1,0 +1,81 @@
+<!--<app-task-header [myHeader]="header"> </app-task-header> -->
+<!--<app-breadcrumb [Admin]="Admin" [Views]="Views" [Details]="Details" [Task]="Task"></app-breadcrumb> -->
+<div class="container">
+        <div class="form-row">
+                <div class="col-xs-12"> <h3> Task: {{taskArray.TaskName}} </h3></div>
+            </div>
+    <div class="form-row">
+           
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+            <form (ngSubmit)="onSubmit()" id="taskform" >
+                <div class="form-group">
+                    <label for="taskname">Task name</label>
+                    <input type="text" class="form-control" name="taskname" id="taskname" [(ngModel)]="taskArray.TaskName"
+                     #name="ngModel" required>
+                     <div [ngClass]="{'invalid-feedback':name.invalid && (name.dirty || name.touched)}"  *ngIf="name.invalid && (name.dirty || name.touched)" >
+                        The field Taskname is empty!
+                    </div>
+                </div>
+             
+                <div class="form-group">
+                    <label for="s_url">Service URL</label>
+                    <input  [ngClass]="{'invalid':isCorrectUrl()== false || s_url1.invalid}" type="text" class="form-control" name="s_url" id="s_url" [(ngModel)]="taskArray.ScheduledUrl"
+                     #s_url1="ngModel" required  required>
+                     <div [ngClass]="{'invalid-feedback':isCorrectUrl() == false && (s_url1.dirty || s_url1.touched)}"  *ngIf="isCorrectUrl() == false && (s_url1.dirty || s_url1.touched)" >
+                            Invalid URL! Make sure that url consist of http/https://hostname.domain
+                        </div>
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="crone">Crone expression</label>
+                    <input [ngClass]="{'invalid':(cron.invalid || CheckCron() == false)&& (cron.dirty|| cron.touched)}" type="text" 
+                    class="form-control" name="crone" id="crone" [(ngModel)]="taskArray.Cron" #cron="ngModel" required>
+                    <div [ngClass]="{'invalid-feedback':cron.invalid || CheckCron() == false && (cron.dirty || cron.touched)}"
+                      *ngIf="CheckCron() == false && (cron.dirty || cron.touched)" >
+                      Cron expression must consist of 6 fields!
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="duration">MaxDuration</label> 
+                    <input [ngClass]="{'invalid':(dur.invalid || CheckDuration() == false) && (dur.dirty|| dur.touched)}" type="text" class="form-control"
+                     name="duration" id="duration" #dur="ngModel" [(ngModel)]="taskArray.MaxDuration" required >
+                    <div [ngClass]="{'invalid-feedback':dur.invalid || CheckDuration() == false && (dur.dirty || dur.touched)}"
+                      *ngIf="CheckDuration() == false && (dur.dirty || dur.touched)" >
+                        Value should be more than 15!
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="body">Body</label>
+                    <input type="text" class="form-control" name="body" id="body" [(ngModel)]="taskArray.Body">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="switch">
+                                <input type="checkbox" name="slider" [(ngModel)]="taskArray.ActiveStatus" (click)="onChangeStatus()">
+                                <span class="slider round">
+
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-2" style="margin-left: -30px;">
+                            <label>{{isActive}}</label>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-xs-12 col-md-4">
+    <button type="button" class="btn btn-secondary mybutton" (click) = "onCancel(taskArray['_id'])">Cancel</button>
+    <button type="button" class="btn btn-primary mybutton" (click)="onUpdate(taskArray['_id'])">Update</button>
+    <button type="submit" class="btn btn-info mybutton" (click)="onSubmit(taskArray['_id'])" *ngIf="taskArray.ActiveStatus==false">Submit</button>
+    <button type="button" class="btn btn-danger mybutton" (click)="onRun(taskArray['_id'])"*ngIf="taskArray.ActiveStatus==false">Run</button>
+    </div>
+    
+</div>
+</div>

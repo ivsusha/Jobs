@@ -1,0 +1,38 @@
+<app-task-header [myHeader]="header">  </app-task-header>
+ <div class="container" >
+  <div class="row">
+  <div class="col-xs-12">
+     
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>           
+            <li class="breadcrumb-item active" aria-current="page">Tasks</li>
+          </ol>
+        
+  </div>
+  </div>
+  </div>
+<div class="container">    
+  <app-actions (onSearch)="onSearch($event)"> </app-actions>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Task name</th>
+          <th>StartDate</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr *ngFor="let history of historyArray.models ">
+          <td>
+            <a  [routerLink]="['details', hist._id]"> {{history.TaskName}}</a>
+          </td>
+          <td>{{history.StartDate}}</td>
+          <td>{{history.Duration}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="onNext()"  >Next Page</button>
+</div>

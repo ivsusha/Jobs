@@ -1,0 +1,93 @@
+<!--<app-task-header [myHeader]="header">  </app-task-header> -->
+<div class="container">
+  <!--
+  <div class="row">
+    <div class="col-xs-12 col-md-10  col-lg-10">
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="#">Tasks</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">View Task</li>
+      </ol>
+
+    </div>
+  </div>
+-->
+  <div class="row">
+    <div class="col-xs-8 col-md-10 col-lg-10">
+
+      <h3>
+        <span class="label info">Task {{taskArray.TaskName}}</span>
+        <span class="label"></span>
+      </h3>
+      <span class="badge badge-info">Current Status: {{status}}</span>
+    </div>
+    <div class="col-xs-4 col-md-2 col-md-2">
+    
+      <button type="button" class="btn btn-primary mybutton" (click)="onEdit(taskArray['_id'])" >Edit </button>
+      <button type="button" class="btn btn-danger mybutton" (click)="onDelete(taskArray['_id'])">Delete</button>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <table class="table table-hover">
+
+        <tbody>
+          <tr>
+            <td>Task name</td>
+            <td>{{taskArray.TaskName}}</td>
+          </tr>
+          <tr>
+            <td>Method</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Service URL</td>
+            <td>{{taskArray.ScheduledUrl}}</td>
+          </tr>
+
+          <tr>
+            <td>Timeout</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Crone expression</td>
+            <td>{{taskArray.Cron}}</td>
+          </tr>
+          <tr>
+            <td>MaxDuration</td>
+            <td>{{taskArray.MaxDuration}}</td>
+          </tr>
+          <tr>
+            <td>Header</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Body</td>
+            <td>{{taskArray.Body}}</td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>{{taskArray.ActiveStatus}}</td>
+          </tr>
+          <tr>
+            <td>Do not run at the same time as</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-2 col-sm-2">
+      <button type="button" class="btn btn-default" (click)="onBack()">Back</button>
+    </div> 
+  </div>
+</div>

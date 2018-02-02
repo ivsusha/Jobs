@@ -1,1 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~font-awesome/css/font-awesome.css";
+.mybutton{
+    margin-left:10px;
+    
+  }
+.bg-color {
+    background-color: #176da0;
+    color: #fff;
+    padding: 15px 0;   
+}
+h1 {
+    font-size: 70px;
+    letter-spacing: 1px;
+    margin: 0 0 20px;
+}
+h1, h2 {
+    font-family: IBMPlexSans-Text;
+    font-weight: 400;
+}
+h2 {
+    font-size: 24px;
+    margin: 15px 0;
+}
+html {
+    font-family: sans-serif;  
+}
+
+.breadcrumb {
+    background-color: transparent;
+    font-family: IBMPlexSans-Text;
+    font-size: 16px;
+    margin: 20px 0;
+    padding: 0;
+}
+.breadcrumb > li + li::before {
+    padding: 0;
+}
+a {
+   
+    margin-right: 7px;
+}
+a:hover {
+  
+    text-decoration: underline;
+}
+h2{
+    font-family: IBMPlexSans-Text;
+    font-weight: 400;
+}
+body, html {
+    font-family: IBMPlexSans-Regular;
+}
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: white!important;
+}
+

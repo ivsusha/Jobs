@@ -1,0 +1,45 @@
+
+<div class="container" id ="container">
+  <!--
+  <div class="row">
+    <div class="col-xs-12">
+
+      <ol class="breadcrumb" style="padding-left:15px;">
+        <li class="breadcrumb-item">
+          <a href="#">Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Tasks</li>
+      </ol>
+
+    </div>
+  </div>
+-->
+<app-actions (onSearch)="onSearch($event)"></app-actions>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Task name</th>
+          <th>Active</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let task of tasksArray.models |search:searchValue">
+          <td>
+            <a [routerLink]="['details', task._id]"> {{task.TaskName}}</a>
+          </td>
+          <td>{{task.ActiveStatus}}</td>
+          <td>{{task.Body}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="pagination">
+    <li class="page-item ">
+      <button class="btn btn-secondary" tabindex="-1" (click)="onNext()" id ="next" [disabled]="pageToken=='end'">Next Page</button>
+    </li>
+  </ul>
+  
+</div>
