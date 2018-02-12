@@ -16,6 +16,13 @@ import {NgForm } from '@angular/forms';
 import { HistoryComponent } from './history/history.component';
 import { HistoryfilterComponent } from './historyfilter/historyfilter.component';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { OrderbyPipe } from './orderby.pipe';
+import { SortablecolumnComponent } from './sortablecolumn/sortablecolumn.component';
+import { SortService } from './sort.service';
+import { SortableTableDirective } from './sortable-table.directive';
+import { SorttasksService } from './sorttasks.service';
+import { FindhistoryPipe } from './findhistory.pipe';
+import { FooterComponent } from './footer/footer.component';
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 export const appRoutes: Routes =[
@@ -43,6 +50,11 @@ export const appRoutes: Routes =[
     SearchPipe,
     HistoryComponent,
     HistoryfilterComponent,
+    OrderbyPipe,
+    SortablecolumnComponent,
+    SortableTableDirective,
+    FindhistoryPipe,
+    FooterComponent,
    
   ],
   imports: [   
@@ -52,7 +64,7 @@ export const appRoutes: Routes =[
     MultiselectDropdownModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [TasksService],
+  providers: [TasksService,SortService,SorttasksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

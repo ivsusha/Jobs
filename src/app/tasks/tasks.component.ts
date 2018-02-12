@@ -4,7 +4,9 @@ import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { SearchPipe } from '../search.pipe';
 import * as $ from 'jquery';
-
+import { SorttasksService } from '../sorttasks.service';
+import {TaskSearchCriteria} from '../sorttasks.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-tasks',
@@ -14,21 +16,22 @@ import * as $ from 'jquery';
 })
 export class TasksComponent implements OnInit,OnDestroy {
  
-  tasksArray;
-   numPage = 1;
-// tasksArray;
+  tasksArray:any = [];
   header: string = "Tasks";
   searchValue :string="";
-  currPage; 
   pageToken = null;
-  body;
+  body; 
+  showactive ="All"; 
+  private reqSubscription: Subscription;
   private eventOptions: boolean|{capture?: boolean, passive?: boolean};
   passiveSupported(){};
  
-  constructor(private tasksService: TasksService,   private pipe: SearchPipe,private ngZone: NgZone) { }
+  constructor(private tasksService: TasksService,   private pipe: SearchPipe,private sort:SorttasksService, private ngZone: NgZone) {
+    this.tasksArray['models'] ="";
+   }
  
   ngOnInit() { 
-
+    this.tasksService.header = "Tasks";
     this.body = document.getElementById("container");
     if (this.passiveSupported()) { //use the implementation on mozilla
       this.eventOptions = {
@@ -41,23 +44,14 @@ export class TasksComponent implements OnInit,OnDestroy {
   this.ngZone.runOutsideAngular(() => {
       window.addEventListener('scroll', this.scroll, <any>this.eventOptions);
   });
-     
-    
-
-
- this.tasksArray =this.tasksService.getTasksArray();
- this.pageToken = this.tasksArray['pageToken'];
+  
 if(this.pageToken=="end" ) return true;
- let tarr;
-    
- 
-    this.tasksService.getTasks(this.pageToken).subscribe(
+    this.reqSubscription=this.tasksService.getTasks(this.pageToken).subscribe(
       (response: Response) => {
-        tarr = response.json();
-        
-      this.tasksService.setTasksArray(tarr);
- this.tasksArray = this.tasksService.getTasksArray();
-    this.pageToken = tarr['pageToken'];
+        this.tasksArray = response.json();        
+    this.tasksService.setTasksArray(this.tasksArray);
+    this.pageToken = this.tasksArray['pageToken'];
+    this.tasksArray['models'] =this.sort.getResult(this.tasksArray,this.sort.sortEvent);
  
     if(this.pageToken == null) this.pageToken ="end";    
  
@@ -76,19 +70,20 @@ if(this.pageToken=="end" ) return true;
 //  }
 
   onNext(){   
-  
- //   if(this.pageToken == null) {window.removeEventListener('scroll', this.scroll, <any>this.eventOptions);return;}
+ 
+ //   if(this.pageToken == null) {window.removeEventListener('scroll', this.scroll, <any>this.eventOptions);return;} 
   this.pageToken = this.tasksArray['pageToken'];
   if(this.pageToken=="end" ) {this.ngOnDestroy();return;}
-  this.tasksService.getTasks(this.pageToken ).subscribe(   
+  this.reqSubscription = this.tasksService.getTasks(this.pageToken ).subscribe(   
            (response:Response)=>{
             let pageArray = response.json();
                 
          pageArray['models'].map(entry =>this.tasksArray['models'].push(entry));
+         this.tasksArray['models'] =this.sort.getResult(this.tasksArray,this.sort.sortEvent);
          this.pageToken = pageArray['pageToken'];
          if(this.pageToken == null) this.pageToken ="end";    
-          this.tasksArray['pageToken'] = this.pageToken;        
-         this.tasksService.setTasksArray(this.tasksArray);
+          this.tasksArray['pageToken'] = this.pageToken; 
+        this.tasksService.setTasksArray(this.tasksArray);
          this.searchValue= undefined;
          this.tasksArray['models'] = this.pipe.transform(this.tasksArray['models'],this.searchValue);       
            },
@@ -109,17 +104,15 @@ scroll = (): void => {
   let   wind_height = $(window).height();//высота окна браузера
   if(this.pageToken =="end"){window.removeEventListener('scroll', this.scroll, <any>this.eventOptions);return;}
 
-// if(pageYOffset >= (winheight) && this.pageToken!="end" ){
+
   if(this.pageToken !="end"){
- // if((page_height - scroll_top) < wind_height*2 ){
-  if( scroll_top>= (wind_height)*this.numPage-450 ){  
+    if((scroll_top+ wind_height ) >=page_height-1){
    $(document).scrollTop() >= page_height;
 //    alert( 'Текущая прокрутка сверху: ' + window.pageYOffset );
-//    alert ("scroll h "+document.body.scrollHeight+ ";Выс прокруч обл "+scroll_top + "Высота браузера" + wind_height);
+ //   alert ("высота всей страницы"+page_height+ ";Выс прокруч обл "+scroll_top + "Высота браузера" + wind_height);
     if(this.pageToken =="end") {window.removeEventListener('scroll', this.scroll, <any>this.eventOptions);return;}
  
-  let but = document.getElementById("next");
-  this.numPage = this.numPage +1;
+  let but = document.getElementById("next"); 
 //  this.onNext(); 
   but.click();
   }
@@ -129,8 +122,14 @@ scroll = (): void => {
   //notice the 'odd' function assignment to a class field
   //this is used to be able to remove the event listener
 };
+onSorted(event){
+  this.sort.sortEvent = event;
+  this.tasksArray['models'] =this.sort.getResult(this.tasksArray,event);
+  this.searchValue= undefined;
+  this.tasksArray['models'] = this.pipe.transform(this.tasksArray['models'],this.searchValue);  
+}
 ngOnDestroy() {
   window.removeEventListener('scroll', this.scroll, <any>this.eventOptions);
-  //unfortunately the compiler doesn't know yet about this object, so cast to any
+  if(this.reqSubscription !=null) this.reqSubscription.unsubscribe();
 }
 }

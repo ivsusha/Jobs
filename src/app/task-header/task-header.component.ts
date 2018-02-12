@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TasksService } from '../tasks.service';
 
 
 @Component({
@@ -7,8 +8,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./task-header.component.css']
 })
 export class TaskHeaderComponent implements OnInit {
+  
 @Input() myHeader: string;
-  constructor() { }
+  constructor(private tasksService: TasksService) { }
 
   ngOnInit() {   
   

@@ -18,18 +18,21 @@
   </div>
 -->
   <div class="row">
-    <div class="col-xs-8 col-md-10 col-lg-10">
+    <div class="col-xs-6 col-md-8 col-lg-9">
 
       <h3>
-        <span class="label info">Task {{taskArray.TaskName}}</span>
+        <span class="label info mybadge">Task {{taskArray.TaskName}}</span>
         <span class="label"></span>
       </h3>
-      <span class="badge badge-info">Current Status: {{status}}</span>
+      <h6 class="mybadge">Current Status: <span class="badge badge-pill badge-secondary" style="margin-bottom:5px;">{{status}}</span></h6>
     </div>
-    <div class="col-xs-4 col-md-2 col-md-2">
-    
-      <button type="button" class="btn btn-primary mybutton" (click)="onEdit(taskArray['_id'])" >Edit </button>
-      <button type="button" class="btn btn-danger mybutton" (click)="onDelete(taskArray['_id'])">Delete</button>
+    <div class="col-xs-6 col-md-4 col-lg-3"> 
+        <div style="float: right;">        
+      <button type="submit" class="btn btn-primary mybtn mybtn-action" (click)="onSubmit(taskArray['_id'])"
+       *ngIf="taskArray.ActiveStatus==false">Submit</button>
+      <button type="button" class="btn btn-primary mybtn mybtn-action" (click)="onRun(taskArray['_id'])"
+      *ngIf="taskArray.ActiveStatus==false">Run</button>
+     </div>
     </div>
 
 
@@ -37,26 +40,16 @@
 
   <div class="row">
     <div class="col-xs-12 col-md-12">
-      <table class="table table-hover">
-
+      <table class="table table-hover">     
         <tbody>
           <tr>
             <td>Task name</td>
             <td>{{taskArray.TaskName}}</td>
-          </tr>
-          <tr>
-            <td>Method</td>
-            <td></td>
-          </tr>
+          </tr>         
           <tr>
             <td>Service URL</td>
             <td>{{taskArray.ScheduledUrl}}</td>
-          </tr>
-
-          <tr>
-            <td>Timeout</td>
-            <td></td>
-          </tr>
+          </tr>         
           <tr>
             <td>Crone expression</td>
             <td>{{taskArray.Cron}}</td>
@@ -64,30 +57,34 @@
           <tr>
             <td>MaxDuration</td>
             <td>{{taskArray.MaxDuration}}</td>
-          </tr>
-          <tr>
-            <td>Header</td>
-            <td></td>
-          </tr>
+          </tr>        
           <tr>
             <td>Body</td>
             <td>{{taskArray.Body}}</td>
           </tr>
+          
+          <!--
           <tr>
             <td>Status</td>
             <td>{{taskArray.ActiveStatus}}</td>
           </tr>
+          
           <tr>
             <td>Do not run at the same time as</td>
             <td></td>
           </tr>
-        </tbody>
-      </table>
+        -->
+        </tbody>               
+      </table> 
+      <hr>    
     </div>
   </div>
+  
   <div class="row">
-    <div class="col-xs-2 col-sm-2">
-      <button type="button" class="btn btn-default" (click)="onBack()">Back</button>
-    </div> 
+    <div class="col-xs-12" style="padding:18px;">
+        <button type="button" class="btn btn-outline-secondary mybtn" (click)="onBack()">Back</button>
+        <button type="button" class="btn btn-outline-primary mybtn" (click)="onEdit(taskArray['_id'])" >Edit </button>
+        <button type="button" class="btn btn-outline-primary mybtn" (click)="onDelete(taskArray['_id'])">Delete</button>
+    </div>
   </div>
 </div>

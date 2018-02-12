@@ -7,11 +7,8 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  public header;
-  ngOnInit(): void {
-    throw new Error("Method not implemented.");
-  }
+export class AppComponent{
+  public header; 
  constructor(private router: Router){
    router.navigate(['tasks']);
  }

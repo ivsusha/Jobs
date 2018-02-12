@@ -8,7 +8,7 @@ import { Response } from '@angular/http';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit,AfterViewInit {
   private id: string;
   status;
   header: string = "View Task";
@@ -23,6 +23,7 @@ export class DetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tasksService.header = "View Task";
     this.tasksService.getTaskbyId(this.id).subscribe(
       (response: Response) => {
         this.taskArray = response.json();
@@ -33,12 +34,59 @@ export class DetailsComponent implements OnInit {
       }
     );
   }
- 
+ ngAfterViewInit(){
+  this.tasksService.getTaskStatus(this.id).subscribe(
+    (response: Response) => {
+      this.status = response.json();
+
+    },
+    (error) => {
+      console.log(error)
+    }
+  );
+ }
   onEdit(id){
     this.router.navigate(['/edit',id]);
   }
 onEditTask(params){
   this.router.navigate(['/taskedit'],{ queryParams: params });
+}
+updateArray(response: Response){
+
+  let alltasks=[];
+  
+  this.taskArray =  response.json();
+ // if(response['_body']!="")  this.taskArray['_rev']= ver['_body'];
+ 
+  alltasks = this.tasksService.getTasksArray();
+  alltasks['models'].filter((entry,ind)=>{
+    if(entry['_id']== this.taskArray['_id']) {alltasks['models'][ind] = this.taskArray;}
+  })
+  this.tasksService.setTasksArray(alltasks);
+}
+onSubmit(id){ 
+  this.tasksService.submitTaskbyId(this.id).subscribe(
+    (response: Response) => {
+ //     this.updateArray(response);
+      this.router.navigate(['']);
+     
+    },
+    (error) => {
+     console.log(error)
+    }
+  );
+}
+onRun(id){ 
+  this.tasksService.runTask(this.id).subscribe(
+    (response: Response) => {
+    //  this.updateArray(response);
+      this.router.navigate(['']);
+     
+    },
+    (error) => {
+     console.log(error)
+    }
+  );
 }
 onBack(){
   this.router.navigate(['/tasks']);

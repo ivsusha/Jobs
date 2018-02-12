@@ -2,11 +2,12 @@
 <!--<app-breadcrumb [Admin]="Admin" [Views]="Views" [Details]="Details" [Task]="Task"></app-breadcrumb> -->
 <div class="container">
         <div class="form-row">
-                <div class="col-xs-12"> <h3> Task: {{taskArray.TaskName}} </h3></div>
+                <div class="col-xs-12"> <h3> Task: {{taskArray.TaskName}} </h3></div>               
             </div>
     <div class="form-row">
            
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <h6>Current Status: <span class="badge badge-pill badge-secondary" style="margin-bottom:5px;">{{status}}</span></h6>
             <form (ngSubmit)="onSubmit()" id="taskform" >
                 <div class="form-group">
                     <label for="taskname">Task name</label>
@@ -47,8 +48,9 @@
                 </div>
                 <div class="form-group">
                     <label for="body">Body</label>
-                    <input type="text" class="form-control" name="body" id="body" [(ngModel)]="taskArray.Body">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="body"  id="body" [(ngModel)]="taskArray.Body"></textarea>
                 </div>
+                <!--
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-3">
@@ -65,17 +67,19 @@
 
                     </div>
                 </div>
-                
+            --> 
             </form>
         </div>
     </div>
     <div class="row">
-            <div class="col-xs-12 col-md-4">
-    <button type="button" class="btn btn-secondary mybutton" (click) = "onCancel(taskArray['_id'])">Cancel</button>
-    <button type="button" class="btn btn-primary mybutton" (click)="onUpdate(taskArray['_id'])">Update</button>
-    <button type="submit" class="btn btn-info mybutton" (click)="onSubmit(taskArray['_id'])" *ngIf="taskArray.ActiveStatus==false">Submit</button>
-    <button type="button" class="btn btn-danger mybutton" (click)="onRun(taskArray['_id'])"*ngIf="taskArray.ActiveStatus==false">Run</button>
-    </div>
+            <div class="col-xs-12 col-md-5">
+    <button type="button" class="btn btn-outline-secondary mybtn" (click) = "onCancel(taskArray['_id'])">Cancel</button>
+    <button type="button" class="btn btn-outline-primary mybtn" (click)="onUpdate(taskArray['_id'])"*ngIf="taskArray.ActiveStatus==false">Save</button>
+   <!--
+    <button type="submit" class="btn btn-outline-primary mybtn" (click)="onSubmit(taskArray['_id'])" *ngIf="taskArray.ActiveStatus==false">Submit</button>
+    <button type="button" class="btn btn-outline-primary mybtn" (click)="onRun(taskArray['_id'])"*ngIf="taskArray.ActiveStatus==false">Run</button>
+   -->
+</div>
     
 </div>
 </div>

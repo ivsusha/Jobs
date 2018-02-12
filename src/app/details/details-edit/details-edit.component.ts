@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { TasksService } from '../../tasks.service';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { NgModel } from '@angular/forms/src/directives/ng_model';
   styleUrls: ['./details-edit.component.css'],
   
 })
-export class DetailsEditComponent implements OnInit {
+export class DetailsEditComponent implements OnInit,AfterViewInit {
 
   private id: string;
   header: string = "Edit Task";
@@ -24,10 +24,11 @@ export class DetailsEditComponent implements OnInit {
   ValidUrl:boolean = true;
   CronValidalid: boolean = true;
   MaxDur: boolean = true;
+  status;
   taskArray: {
-    'ActiveStatus': string, 'TaskName': string,'ConflictTasks':[""], 'Body': string,'Headers':{}, 'MaxDuration': string, 'Cron': string, 'ScheduledUrl': string
+    'ActiveStatus': boolean, 'TaskName': string,'ConflictTasks':[""], 'Body': string,'Headers':{}, 'MaxDuration': string, 'Cron': string, 'ScheduledUrl': string
   }=
-  { 'ActiveStatus':"false", 'TaskName': "",'ConflictTasks':[""], 'Body': "",'Headers':{}, 'MaxDuration': "", 'Cron': "", 'ScheduledUrl': ""};
+  { 'ActiveStatus':false, 'TaskName': "",'ConflictTasks':[""], 'Body': "",'Headers':{}, 'MaxDuration': "", 'Cron': "", 'ScheduledUrl': ""};
 
 // @ViewChild('cron') 
 //	private cron : NgModel;
@@ -42,6 +43,7 @@ this.activateRoute.params.subscribe(param => this.id = param['id']);
 
   ngOnInit() {
     if(this.id == undefined) return;
+    this.tasksService.header = "Edit Task";
     this.tasksService.setHeader("Edit Task");
     this.tasksService.getTaskbyId(this.id).subscribe(
       (response: Response) => {
@@ -55,6 +57,17 @@ this.activateRoute.params.subscribe(param => this.id = param['id']);
     );
 
   }
+  ngAfterViewInit(){
+    this.tasksService.getTaskStatus(this.id).subscribe(
+      (response: Response) => {
+        this.status = response.json();
+  
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+   }
   setTaskArray(params){      
     this.taskArray = params;       
   //  this.taskArray['TaskName']= params['TaskName'];
@@ -72,7 +85,10 @@ this.activateRoute.params.subscribe(param => this.id = param['id']);
  
     this.tasksService.saveTask(this.taskArray,this.taskArray['_id'],this.taskArray['_rev']).subscribe(
       (response: Response) => {
+        this.taskArray = response.json();
+  //      this.updateArray(response);
         this.router.navigate(['details', this.taskArray['_id']]);
+       
         // response.json();
        // console.log(response);
      },
@@ -81,6 +97,7 @@ this.activateRoute.params.subscribe(param => this.id = param['id']);
      }
     );
   }
+  
   isCorrectUrl():boolean{
     const url_s = this.taskArray["ScheduledUrl"];
      if(url_s == undefined )  {this.ValidUrl = false; return this.ValidUrl};
@@ -112,12 +129,15 @@ this.activateRoute.params.subscribe(param => this.id = param['id']);
     else return true
   }
   onCancel(id){
+    this.tasksService.notLoad = true;
     if(id==undefined) return this.router.navigate(['/tasks'])
     else return this.router.navigate(['details', id])
   }
   onSubmit(id){
+    this.tasksService.notLoad = true;
     this.tasksService.submitTaskbyId(this.id).subscribe(
       (response: Response) => {
+  //      this.updateArray(response);
         this.router.navigate(['']);
        
       },
@@ -127,8 +147,10 @@ this.activateRoute.params.subscribe(param => this.id = param['id']);
     );
   }
   onRun(id){
+    this.tasksService.notLoad = true;
     this.tasksService.runTask(this.id).subscribe(
       (response: Response) => {
+ //       this.updateArray(response);
         this.router.navigate(['']);
        
       },

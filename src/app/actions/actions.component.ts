@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,11 +10,14 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 export class ActionsComponent implements OnInit {
   mySearch;
   @Output() onSearch = new EventEmitter<string>();
-  constructor() { }
+  constructor( private router: Router) { }
 
   ngOnInit() {
   }
   onEnter(val){
     this.onSearch.emit(val);
+  }
+  addNew(){
+    this.router.navigate(["/new"]);
   }
 }

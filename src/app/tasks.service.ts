@@ -20,7 +20,8 @@ export class TasksService {
 
 pageToken;
 pageTokenPrev;
-header;
+public header;
+public notLoad = false; 
   constructor(private http: Http ) { }
   getTasks(pattern) {
 

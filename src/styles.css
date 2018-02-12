@@ -1,27 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~font-awesome/css/font-awesome.css";
-.mybutton{
-    margin-left:10px;
-    
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border-top: 1px solid #ddd;   
+    line-height: 1.42857;
+    padding: 8px;
+    vertical-align: top;
+}
+th{
+    border-right: 1px solid #ddd;
+}
+  .mybtn{  
+    width:70px;
+    color: #176da0;
+    /*
+    font-family: IBMPlexSans-Light;
+     font-size: 15px;
+    */
+   
+   
+    margin-bottom: 10px;
+    margin-right: 10px;
+
   }
+ .mybtn.mybtn-action{
+    background-color: #16608b;
+    border-color: #176da0;
+    color: #fff;  
+}
+  .mybtn:hover {
+    background-color: #176da0;
+    border-color: #176da0;
+    color: #fff;
+  }
+  a{color: #176da0;}
 .bg-color {
     background-color: #176da0;
     color: #fff;
     padding: 15px 0;   
 }
-h1 {
-    font-size: 70px;
-    letter-spacing: 1px;
-    margin: 0 0 20px;
-}
-h1, h2 {
-    font-family: IBMPlexSans-Text;
-    font-weight: 400;
-}
-h2 {
-    font-size: 24px;
-    margin: 15px 0;
-}
+
 html {
     font-family: sans-serif;  
 }
@@ -44,10 +61,7 @@ a:hover {
   
     text-decoration: underline;
 }
-h2{
-    font-family: IBMPlexSans-Text;
-    font-weight: 400;
-}
+
 body, html {
     font-family: IBMPlexSans-Regular;
 }
@@ -55,5 +69,9 @@ body, html {
     color: #fff;
     text-decoration: none;
     background-color: white!important;
+}
+.mybadge{
+    margin-left:8px;
+    margin-bottom:5px;
 }
 

@@ -1,5 +1,4 @@
-
-<div class="container" id ="container">
+<div class="container" id="container">
   <!--
   <div class="row">
     <div class="col-xs-12">
@@ -14,32 +13,76 @@
     </div>
   </div>
 -->
-<app-actions (onSearch)="onSearch($event)"></app-actions>
-  <div class="table-responsive">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Task name</th>
-          <th>Active</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
+<div class="row" style="margin-left:-20px">
+    <div class="col-xs-12 col-md-12">
+  <app-actions (onSearch)="onSearch($event)" ></app-actions>
+</div> 
+</div>
+  <div class="row">
+    <div class="col-xs-4 col-md-9" style="padding-left:8px;" >
+      <h6>Total tasks:
+        <span class="badge badge-pill badge-secondary">{{tasksArray.models.length}}</span>
+      </h6>
+    </div>
+    <div class="col-xs-8 col-md-3">
+      <!--
+      <div class="form-check"  style="float:right;" >
+        <input type="checkbox" class="form-check-input" id="active" name="active" [(ngModel)]="showactive"
+         style="margin-left:0px;margin-top: 0.4rem;" >
+      -->
+        <label style="padding-left:4.5rem;" class="form-check-label" for="Select1" >Show for</label>
+        <select class="custom-select" id="Select1"  [(ngModel)]="showactive" style="float:right;margin-bottom: 0.8rem;">
+            <option>All</option> 
+            <option>Active</option>
+            <option>Inactive</option>
+            </select>
 
-        <tr *ngFor="let task of tasksArray.models |search:searchValue">
-          <td>
-            <a [routerLink]="['details', task._id]"> {{task.TaskName}}</a>
-          </td>
-          <td>{{task.ActiveStatus}}</td>
-          <td>{{task.Body}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <ul class="pagination">
-    <li class="page-item ">
-      <button class="btn btn-secondary" tabindex="-1" (click)="onNext()" id ="next" [disabled]="pageToken=='end'">Next Page</button>
-    </li>
-  </ul>
+
+      </div>
+    </div>
   
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-hover" sortable-table (sorted)="onSorted($event)">
+        <thead>
+          <tr>
+            <th sortable-column="TaskName" sort-direction=''>Task name </th>
+            <th sortable-column="ActiveStatus">IsActive</th>
+            <th>Duration</th>
+            <th>Description</th>
+            <th style=" border-right: 0px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let task of tasksArray.models  |search:{'searchvalue':searchValue,'showactive':showactive}">
+            <td>
+              <a [routerLink]="['details', task._id]"> {{task.TaskName}} </a>
+            </td>
+            <td *ngIf="task.ActiveStatus==true">
+              <i class="fa fa-check" style="color:rgb(179, 209, 179)"></i>
+            </td>
+            <td *ngIf="task.ActiveStatus==false">
+              <i class="fa fa-times" style="color:rgb(228, 163, 163)"></i>
+            </td>
+            <td>{{task.MaxDuration}}</td>
+            <td>{{task.Body}}</td>
+            <td>
+              <a [routerLink]="['/edit', task._id]">
+                <span>
+                  <i class="fa fa-edit"></i>
+                </span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="pagination" style="display:none">
+      <li class="page-item ">
+        <button class="btn btn-secondary" tabindex="-1" (click)="onNext()" id="next" [disabled]="pageToken=='end'">Next Page</button>
+      </li>
+    </ul>
+
+  </div>
 </div>
