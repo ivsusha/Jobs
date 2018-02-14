@@ -3,9 +3,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { SortService } from './sort.service';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[sortable-table]'
 })
-export class SortableTableDirective implements OnInit, OnDestroy{
+export class SortableTableDirective implements OnInit, OnDestroy {
   constructor(private sortService: SortService) {}
 
     @Output()

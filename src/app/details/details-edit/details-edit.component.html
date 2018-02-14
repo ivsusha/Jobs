@@ -6,7 +6,7 @@
             </div>
     <div class="form-row">
            
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
                 <h6>Current Status: <span class="badge badge-pill badge-secondary" style="margin-bottom:5px;">{{status}}</span></h6>
             <form (ngSubmit)="onSubmit()" id="taskform" >
                 <div class="form-group">
@@ -27,15 +27,28 @@
                         </div>
                 </div>
                 
-
+                <div class="row">
+                    <div class="col-xs-10 col-md-8">
+                            
                 <div class="form-group">
-                    <label for="crone">Crone expression</label>
-                    <input [ngClass]="{'invalid':(cron.invalid || CheckCron() == false)&& (cron.dirty|| cron.touched)}" type="text" 
-                    class="form-control" name="crone" id="crone" [(ngModel)]="taskArray.Cron" #cron="ngModel" required>
+                        <label for="crone">Crone expression</label>
+                   <input [ngClass]="{'invalid':(cron.invalid || CheckCron() == false)&& (cron.dirty|| cron.touched)}" type="text" 
+                    class="form-control" name="crone" id="crone" [(ngModel)]="taskArray.Cron" #cron="ngModel"  readonly required> 
+                                                          
                     <div [ngClass]="{'invalid-feedback':cron.invalid || CheckCron() == false && (cron.dirty || cron.touched)}"
                       *ngIf="CheckCron() == false && (cron.dirty || cron.touched)" >
                       Cron expression must consist of 6 fields!
-                    </div>
+                    </div> 
+                </div>
+                </div>
+                <div class="col-xs-2 col-md-1">                     
+                   
+                    <button type="button" class="btn btn-outline-secondary " (click) = "onCron()" style="margin-left:-20px;margin-top:30px;"><i class="fa fa-edit"></i></button>
+                    
+                 </div>
+            </div>
+                <div class="form-group">
+                <app-cron [isVisible] = "cronVisible" (cronUpdate) = "cronUpdate($event)" ></app-cron>
                 </div>
                 <div class="form-group">
                     <label for="duration">MaxDuration</label> 
@@ -71,10 +84,11 @@
             </form>
         </div>
     </div>
+    <div id ="error" #err></div>
     <div class="row">
             <div class="col-xs-12 col-md-5">
     <button type="button" class="btn btn-outline-secondary mybtn" (click) = "onCancel(taskArray['_id'])">Cancel</button>
-    <button type="button" class="btn btn-outline-primary mybtn" (click)="onUpdate(taskArray['_id'])"*ngIf="taskArray.ActiveStatus==false">Save</button>
+    <button type="button" class="btn btn-outline-primary mybtn" (click)="onUpdate(taskArray['_id'])"*ngIf="status == 'INACTIVE'">Save</button>
    <!--
     <button type="submit" class="btn btn-outline-primary mybtn" (click)="onSubmit(taskArray['_id'])" *ngIf="taskArray.ActiveStatus==false">Submit</button>
     <button type="button" class="btn btn-outline-primary mybtn" (click)="onRun(taskArray['_id'])"*ngIf="taskArray.ActiveStatus==false">Run</button>

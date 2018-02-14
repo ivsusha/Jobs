@@ -1,0 +1,129 @@
+<div class="section">
+  <input type="radio" id="cronEveryDay" name="cronDay" [(checked)]="isEveryDay" (click)="changeType($event)">
+  <label for="cronEveryDay" class="checkbox">Every day</label>
+</div>
+<div class="section">
+  <input type="radio" id="cronDowIncrement" name="cronDay" [(checked)]="isDowIncrement" (click)="changeType($event)">
+  <label for="cronDowIncrement" class="checkbox">Every
+    <select id="cronDowIncrementIncrement" (change)="onDowIncrement($event)">
+      <option value="{{wdn}}" *ngFor="let wdn of weekArr" [selected]="isEqual(wdn, dowIncrement)">{{wdn}}</option>
+    </select> day(s) starting at day
+    <select id="cronDowIncrementStart" (change)="onDowIncrementStart($event)">
+      <option value="{{wdn}}" *ngFor="let wdn of weekArr" [selected]="isEqual(wdn, dowIncrementStart)">{{weekDayName(wdn)}}</option>
+    </select>
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronDomIncrement" name="cronDay" [(checked)]="isDomIncrement" (click)="changeType($event)">
+  <label for="cronDomIncrement" class="checkbox">Every
+    <select id="cronDomIncrementIncrement" (change)="onDomIncrement($event)">
+      <option value="{{mdn}}" *ngFor="let mdn of monthArr" [selected]="isEqual(mdn, domIncrement)">{{mdn}}</option>
+    </select> day(s) starting on the
+    <select id="cronDomIncrementStart" (change)="onDomIncrementStart($event)">
+      <option value="{{mdn}}" *ngFor="let mdn of monthArr" [selected]="isEqual(mdn, domIncrementStart)">{{mdn}}st</option>
+    </select>
+    of the month
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronDowSpecific" name="cronDay" [(checked)]="isDowSpecific" (click)="changeType($event)">
+  <label for="cronDowSpecific" class="checkbox">Specific day of week (choose one or many)</label>
+  <div class="subsection">
+    <span *ngFor="let wdn of weekPart(0)">
+      <input type="checkbox" id="cronDow{{wdn}}" name="cronDowSpecificSpecific" value="{{wdn}}"
+             [checked]="isWeekSpecific(wdn)" (change)="onDowSpecific($event)">
+      <label for="cronDow{{wdn}}" class="checkbox">{{weekDayName(wdn)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+     <span *ngFor="let wdn of weekPart(4)">
+      <input type="checkbox" id="cronDow{{wdn}}" name="cronDowSpecificSpecific" value="{{wdn}}"
+             [checked]="isWeekSpecific(wdn)" (change)="onDowSpecific($event)">
+      <label for="cronDow{{wdn}}" class="checkbox">{{weekDayName(wdn)}}</label>
+    </span>
+  </div>
+</div>
+<div class="section">
+  <input type="radio" id="cronDomSpecific" name="cronDay" [(checked)]="isDomSpecific" (click)="changeType($event)">
+  <label for="cronDomSpecific" class="checkbox">Specific day (choose one or many)</label>
+
+  <div class="subsection">
+    <span *ngFor="let mdn of monthPart(0)">
+      <input type="checkbox" id="chronDom{{mdn}}" name="cronDomSpecificSpecific" value="{{mdn}}"
+             [checked]="isMonthSpecific(mdn)" (change)="onDomSpecific($event)">
+      <label for="chronDom{{mdn}}" class="checkbox">{{mdn}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+   <span *ngFor="let mdn of monthPart(8)">
+     <input type="checkbox" id="chronDom{{mdn}}" name="cronDomSpecificSpecific" value="{{mdn}}"
+            [checked]="isMonthSpecific(mdn)" (change)="onDomSpecific($event)">
+     <label for="chronDom{{mdn}}" class="checkbox">{{mdn}}</label>
+   </span>
+  </div>
+  <div class="subsection">
+   <span *ngFor="let mdn of monthPart(16)">
+     <input type="checkbox" id="chronDom{{mdn}}" name="cronDomSpecificSpecific" value="{{mdn}}"
+            [checked]="isMonthSpecific(mdn)" (change)="onDomSpecific($event)">
+     <label for="chronDom{{mdn}}" class="checkbox">{{mdn}}</label>
+   </span>
+  </div>
+  <div class="subsection">
+   <span *ngFor="let mdn of monthPart(24)">
+     <input type="checkbox" id="chronDom{{mdn}}" name="cronDomSpecificSpecific" value="{{mdn}}"
+            [checked]="isMonthSpecific(mdn)" (change)="onDomSpecific($event)">
+     <label for="chronDom{{mdn}}" class="checkbox">{{mdn}}</label>
+   </span>
+  </div>
+</div>
+<div class="section">
+  <input type="radio" id="cronLastDom" name="cronDay" [(checked)]="isLastDom" (click)="changeType($event)">
+  <label for="cronLastDom" class="checkbox">On the last day of the month</label>
+</div>
+<div class="section">
+  <input type="radio" id="cronLastDow" name="cronDay" [(checked)]="isLastDow" (click)="changeType($event)">
+  <label for="cronLastDow" class="checkbox">On the last weekday of the month</label>
+</div>
+<div class="section">
+  <input type="radio" id="cronLastSpecificDom" name="cronDay" [(checked)]="isLastSpecificDom" (click)="changeType($event)">
+  <label for="cronLastSpecificDom" class="checkbox">On the last
+    <select id="cronLastSpecificDomDay" (change)="onLastSpecificDom($event)">
+      <option value="{{wdn}}" *ngFor="let wdn of weekArr" [selected]="isEqual(wdn, lastSpecificDom)">{{weekDayName(wdn)}}</option>
+    </select>
+    of the month
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronDaysBeforeEom" name="cronDay" [(checked)]="isDaysBeforeEom" (click)="changeType($event)">
+  <label for="cronDaysBeforeEom" class="checkbox" (change)="onDaysBeforeEom($event)">
+    <select id="cronDaysBeforeEomMinus">
+      <option value="{{mdn}}" *ngFor="let mdn of monthArr" [selected]="isEqual(mdn, daysBeforeEom)">{{mdn}}</option>
+    </select> day(s) before the end of the month
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronNearestWeekday" name="cronDay" [(checked)]="isNearestWeekday" (click)="changeType($event)">
+  <label for="cronNearestWeekday" class="checkbox" (change)="onNearestWeekday($event)">
+    Nearest weekday (Monday to Friday) to the
+    <select id="cronDaysNearestWeekday">
+      <option value="{{mdn}}" *ngFor="let mdn of monthArr" [selected]="isEqual(mdn, nearestWeekday)">{{mdn}}st</option>
+    </select> of the month
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronNthDay" name="cronDay" [(checked)]="isNthDay" (click)="changeType($event)">
+  <label for="cronNthDay" class="checkbox">
+    On the
+    <select id="cronNthDayNth" (change)="onNthWeek($event)">
+      <option value="1" [selected]="isEqual(1, nthWeek)">1st</option>
+      <option value="2" [selected]="isEqual(2, nthWeek)">2nd</option>
+      <option value="3" [selected]="isEqual(3, nthWeek)">3rd</option>
+      <option value="4" [selected]="isEqual(4, nthWeek)">4th</option>
+      <option value="5" [selected]="isEqual(5, nthWeek)">5th</option>
+    </select>
+    <select id="cronNthDayDay"(change)="onNthDay($event)">
+      <option value="{{wdn}}" *ngFor="let wdn of weekArr" [selected]="isEqual(wdn, nthDay)">{{weekDayName(wdn)}}</option>
+    </select>
+    of the month
+  </label>
+</div>

@@ -1,0 +1,53 @@
+
+<div class="panel-group" id="accordion2" *ngIf="isVisible == true">
+  <div class="panel panel-default">
+ 
+    <div class="panel-heading">
+       <!--
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2" >Cron (Task schedule)</a>
+      </h4>
+      -->
+    </div>
+  
+    <div id="collapse2" class="panel" >
+      <div class="panel-body">
+        <ul class="nav nav-tabs">
+         
+          <li class="nav-item"><a  href="javascript:" class= "nav-link" (click)="selectTab(0)" [class.active]="!isContentHidden(0)">Seconds</a></li>
+ 
+          <li class="nav-item"><a  href="javascript:" class= "nav-link" (click)="selectTab(1)" [class.active]="!isContentHidden(1)">Minutes</a></li>
+          <li class="nav-item"><a  href="javascript:" class= "nav-link"(click)="selectTab(2)"[class.active]="!isContentHidden(2)">Hours</a></li>
+          <li class="nav-item"><a  href="javascript:" class= "nav-link"(click)="selectTab(3)" [class.active]="!isContentHidden(3)">Days</a></li>
+          <li class="nav-item"><a  href="javascript:" class= "nav-link"(click)="selectTab(4)"  [class.active]="!isContentHidden(4)">Months</a></li>
+        </ul>
+        <div [class.hidden]="isContentHidden(0)">
+          <!-- Seconds -->
+          <div class="cron-option" style="padding-bottom:10px">
+            <app-seconds [inputValue]="getCronPart(0)" (cronSecond)="onCronSecond($event)"></app-seconds>
+          </div>
+        </div>
+        <div [class.hidden]="isContentHidden(1)">
+          <!-- Minutes -->
+          <app-minutes [inputValue]="getCronPart(1)" (cronMinute)="onCronMinute($event)"></app-minutes>
+        </div>
+        <div [class.hidden]="isContentHidden(2)">
+          <!-- Hours -->
+          <app-hours [inputValue]="getCronPart(2)" (cronHour)="onCronHour($event)"></app-hours>
+        </div>
+        <div [class.hidden]="isContentHidden(3)">
+          <!-- Days -->
+          <app-days [inputValue]="getCronPart(4)" [extraValue]="getCronPart(3)"  (cronDom)="onCronDom($event)" (cronDow)="onCronDow($event)"></app-days>
+        </div>
+        <div [class.hidden]="isContentHidden(4)">
+          <!-- Months -->
+          <app-months [inputValue]="getCronPart(5)" (cronMonth)="onCronMonth($event)"></app-months>
+        </div>
+        <div class="totals">
+          New cron value: <input type="text" value="{{getUpdatedCron()}}" class="totals" disabled>
+          <button class="btn btn-sm btn-primary right" (click)="sendResult();">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

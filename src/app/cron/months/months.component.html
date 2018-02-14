@@ -1,0 +1,52 @@
+<div class="section">
+  <input type="radio" id="cronEveryMonth" name="cronMonth" [(checked)]="isEveryMonth" (click)="changeType($event)">
+  <label for="cronEveryMonth" class="checkbox">Every month</label>
+</div>
+<div class="section">
+  <input type="radio" id="cronMonthIncrement" name="cronMonth" [(checked)]="isMonthIncrement" (click)="changeType($event)">
+  <label for="cronMonthIncrement" class="checkbox">Every
+    <select id="cronMonthIncrementIncrement" (change)="onIncrement($event)">
+      <option value="{{ind}}" *ngFor="let ind of monthsArr" [selected]="isEqual(ind, monthIncrement)">{{ind}}</option>
+    </select> month(s) starting at month
+    <select id="cronMonthIncrementStart"  (change)="onIncrementStart($event)">
+      <option value="{{ind}}" *ngFor="let ind of monthsArr"  [selected]="isEqual(ind, monthIncrementStart)">{{getMonthName(ind)}}</option>
+    </select>
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronMonthSpecific" name="cronMonth" [(checked)]="isMonthSpecific" (click)="changeType($event)">
+  <label for="cronMonthSpecific" class="checkbox">Specific month (choose one or many)</label>
+  <div class="subsection">
+    <span *ngFor="let mn of monthThird(0)">
+      <input type="checkbox" id="{{getCheckBoxId(mn)}}" name="cronMonthSpecificSpecific" value="{{mn}}"
+             [checked]="isSpecific(mn)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(mn)}}" class="checkbox">{{getMonthName(mn)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+   <span *ngFor="let mn of monthThird(4)">
+     <input type="checkbox" id="{{getCheckBoxId(mn)}}" name="cronMonthSpecificSpecific" value="{{mn}}"
+            [checked]="isSpecific(mn)" (change)="onSpecific($event)">
+     <label for="{{getCheckBoxId(mn)}}" class="checkbox">{{getMonthName(mn)}}</label>
+   </span>
+  </div>
+  <div class="subsection">
+   <span *ngFor="let mn of monthThird(8)">
+     <input type="checkbox" id="{{getCheckBoxId(mn)}}" name="cronMonthSpecificSpecific" value="{{mn}}"
+            [checked]="isSpecific(mn)" (change)="onSpecific($event)">
+     <label for="{{getCheckBoxId(mn)}}" class="nofloat checkbox">{{getMonthName(mn)}}</label>
+   </span>
+  </div>
+</div>
+<div class="section">
+  <input type="radio" id="cronMonthRange" name="cronMonth" [(checked)]="isMonthRange" (click)="changeType($event)">
+  <label for="cronMonthRange" class="checkbox">Every month between month
+   <select id="cronMonthRangeStart" (change)="onRangeStart($event)">
+     <option *ngFor="let mn of monthsArr" value="{{mn}}" [selected]="isEqual(mn, monthRangeStart)">{{getMonthName(mn)}}</option>
+   </select>
+   and month
+   <select id="cronMonthRangeEnd"(change)="onRangeEnd($event)">
+     <option *ngFor="let mn of monthsArr" value="{{mn}}" [selected]="isEqual(mn, monthRangeEnd)">{{getMonthName(mn)}}</option>
+   </select>
+  </label>
+</div>

@@ -1,0 +1,52 @@
+<div class="section">
+  <input type="radio" id="cronEveryHour" name="cronHour" [(checked)]="isEveryHour" (click)="changeType($event)">
+  <label for="cronEveryHour" class="checkbox">Every hour</label>
+</div>
+<div class="section">
+  <input type="radio" id="cronHourIncrement" name="cronHour" [(checked)]="isHourIncrement" (click)="changeType($event)">
+  <label for="cronHourIncrement" class="checkbox">Every
+    <select id="cronHourIncrementIncrement" (change)="onIncrement($event)">
+      <option value="{{ind+1}}" *ngFor="let ind of hoursArr" [selected]="isEqual(ind + 1, hourIncrement)">{{ind+1}}</option>
+    </select> hour(s) starting at hour
+    <select id="cronHourIncrementStart" (change)="onIncrementStart($event)">
+      <option value="{{ind}}" *ngFor="let ind of hoursArr" [selected]="isEqual(ind, hourIncrementStart)">{{twoCharsString(ind)}}</option>
+    </select>
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronHourSpecific" name="cronHour" [(checked)]="isHourSpecific" (click)="changeType($event)">
+  <label for="cronHourSpecific" class="checkbox">Specific hour (choose one or many)</label>
+  <div class="subsection">
+    <span  *ngFor="let hr of hourDozen(0)">
+      <input type="checkbox" id="{{getCheckBoxId(hr)}}" name="cronHourSpecificSpecific" value="{{hr}}"
+             [checked]="isSpecific(hr)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(hr)}}" class="checkbox">{{twoCharsString(hr)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let hr of hourDozen(10)">
+      <input type="checkbox" id="{{getCheckBoxId(hr)}}" name="cronHourSpecificSpecific" value="{{hr}}"
+             [checked]="isSpecific(hr)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(hr)}}" class="checkbox">{{twoCharsString(hr)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let hr of hourDozen(20)">
+      <input type="checkbox" id="{{getCheckBoxId(hr)}}" name="cronHourSpecificSpecific" value="{{hr}}"
+             [checked]="isSpecific(hr)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(hr)}}" class="checkbox">{{twoCharsString(hr)}}</label>
+    </span>
+  </div>
+</div>
+<div class="section">
+  <input type="radio" id="cronHourRange" name="cronHour" [(checked)]="isHourRange" (change)="changeType($event)">
+  <label for="cronHourRange" class="checkbox">Every hour between hour
+    <select id="cronHourRangeStart" (change)="onRangeStart($event)">
+      <option *ngFor="let hr of hoursArr" value="{{hr}}" [selected]="isEqual(hr, hourRangeStart)">{{twoCharsString(hr)}}</option>
+    </select>
+    and hour
+    <select id="cronHourRangeEnd" (change)="onRangeEnd($event)">
+      <option *ngFor="let hr of hoursArr" value="{{hr}}" [selected]="isEqual(hr, hourRangeEnd)">{{twoCharsString(hr)}}</option>
+    </select>
+  </label>
+</div>

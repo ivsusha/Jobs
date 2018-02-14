@@ -1,0 +1,75 @@
+<div class="section">
+  <input type="radio" id="cronEverySecond" name="cronSecond" [(checked)]="isEverySecond" (click)="changeType($event)">
+  <label for="cronEverySecond" class="checkbox">Every second</label>
+</div>
+<div class="section">
+  <input type="radio" id="cronSecondIncrement" name="cronSecond" [(checked)]="isSecondIncrement" (click)="changeType($event)">
+  <label for="cronSecondIncrement" class="checkbox">Every
+    <select id="cronSecondIncrementIncrement" (change)="onIncrement($event)">
+      <option value="{{ind+1}}" *ngFor="let ind of secondsArr"  (onselect)="onIncrement($event)"
+              [selected]="isEqual(ind + 1, secondIncrement)">{{ind+1}}</option>
+    </select> second(s) starting at second
+    <select id="cronSecondIncrementStart" (change)="onIncrementStart($event)">
+      <option value="{{ind}}" *ngFor="let ind of secondsArr" (onselect)="onIncrementStart($event)"
+              [selected]="isEqual(ind, secondIncrementStart)">{{twoCharsString(ind)}}</option>
+    </select>
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronSecondSpecific" name="cronSecond" [(checked)]="isSecondSpecific" (click)="changeType($event)">
+  <label for="cronSecondSpecific" class="checkbox">Specific second (choose one or many)</label>
+  <div class="subsection">
+    <span  *ngFor="let sec of secDozen(0)">
+      <input type="checkbox" id="{{getCheckBoxId(sec)}}" name="cronSecondSpecificSpecific" value="{{sec}}"
+             [checked]="isSpecific(sec)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(sec)}}" class="checkbox">{{twoCharsString(sec)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let sec of secDozen(10)">
+      <input type="checkbox" id="{{getCheckBoxId(sec)}}" name="cronSecondSpecificSpecific" value="{{sec}}"
+             [checked]="isSpecific(sec)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(sec)}}" class="checkbox">{{twoCharsString(sec)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let sec of secDozen(20)">
+      <input type="checkbox" id="{{getCheckBoxId(sec)}}" name="cronSecondSpecificSpecific" value="{{sec}}"
+             [checked]="isSpecific(sec)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(sec)}}" class="checkbox">{{twoCharsString(sec)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let sec of secDozen(30)">
+      <input type="checkbox" id="{{getCheckBoxId(sec)}}" name="cronSecondSpecificSpecific" value="{{sec}}"
+             [checked]="isSpecific(sec)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(sec)}}" class="checkbox">{{twoCharsString(sec)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let sec of secDozen(40)">
+      <input type="checkbox" id="{{getCheckBoxId(sec)}}" name="cronSecondSpecificSpecific" value="{{sec}}"
+             [checked]="isSpecific(sec)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(sec)}}" class="checkbox">{{twoCharsString(sec)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let sec of secDozen(50)">
+      <input type="checkbox" id="{{getCheckBoxId(sec)}}" name="cronSecondSpecificSpecific" value="{{sec}}"
+             [checked]="isSpecific(sec)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(sec)}}" class="checkbox">{{twoCharsString(sec)}}</label>
+    </span>
+  </div>
+</div>
+<div class="section">
+  <input type="radio" id="cronSecondRange" name="cronSecond" [(checked)]="isSecondRange" (click)="changeType($event)">
+  <label for="cronSecondRange" class="checkbox">Every second between second
+    <select id="cronSecondRangeStart" (change)="onRangeStart($event)">
+      <option *ngFor="let sec of secondsArr" [value]="sec" [selected]="isEqual(sec, secondRangeStart)">{{twoCharsString(sec)}}</option>
+    </select>
+    and second
+    <select id="cronSecondRangeEnd" (change)="onRangeEnd($event)">
+      <option *ngFor="let sec of secondsArr" [value]="sec" [selected]="isEqual(sec, secondRangeEnd)">{{twoCharsString(sec)}}</option>
+    </select>
+  </label>
+</div>

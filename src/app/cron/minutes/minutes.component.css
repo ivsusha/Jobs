@@ -1,0 +1,14 @@
+div.section {
+  margin-top: 10px;
+  font-size: 1.0rem;
+  padding-left: 10px
+}
+div.subsection {
+  margin-left: 25px;
+}
+label.checkbox {
+  font-size: 1.0rem;
+  font-weight: normal;
+  display: inline-block;
+  min-width: 2rem;
+}

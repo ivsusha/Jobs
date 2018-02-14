@@ -1,0 +1,73 @@
+<div class="section">
+  <input type="radio" id="cronEveryMinute" name="cronMinute" [(checked)]="isEveryMinute" (click)="changeType($event)">
+  <label for="cronEveryMinute" class="checkbox">Every minute</label>
+</div>
+<div class="section">
+  <input type="radio" id="cronMinuteIncrement" name="cronMinute" [(checked)]="isMinuteIncrement" (click)="changeType($event)">
+  <label for="cronMinuteIncrement" class="checkbox">Every
+    <select id="cronMinuteIncrementIncrement" (change)="onIncrement($event)">
+      <option value="{{ind+1}}" *ngFor="let ind of minutesArr" [selected]="isEqual(ind + 1, minuteIncrement)">{{ind+1}}</option>
+    </select> minutes(s) starting at minute
+    <select id="cronMinuteIncrementStart" (change)="onIncrementStart($event)">
+      <option value="{{ind}}" *ngFor="let ind of minutesArr" [selected]="isEqual(ind, minuteIncrementStart)">{{twoCharsString(ind)}}</option>
+    </select>
+  </label>
+</div>
+<div class="section">
+  <input type="radio" id="cronMinuteSpecific" name="cronMinute" [(checked)]="isMinuteSpecific" (click)="changeType($event)">
+  <label for="cronMinuteSpecific" class="checkbox">Specific minute (choose one or many)</label>
+  <div class="subsection">
+    <span  *ngFor="let min of minDozen(0)">
+      <input type="checkbox" id="{{getCheckBoxId(min)}}" name="cronMinuteSpecificSpecific" value="{{min}}"
+             [checked]="isSpecific(min)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(min)}}" class="checkbox">{{twoCharsString(min)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let min of minDozen(10)">
+      <input type="checkbox" id="{{getCheckBoxId(min)}}" name="cronMinuteSpecificSpecific" value="{{min}}"
+             [checked]="isSpecific(min)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(min)}}" class="checkbox">{{twoCharsString(min)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let min of minDozen(20)">
+      <input type="checkbox" id="{{getCheckBoxId(min)}}" name="cronMinuteSpecificSpecific" value="{{min}}"
+             [checked]="isSpecific(min)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(min)}}" class="checkbox">{{twoCharsString(min)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let min of minDozen(30)">
+      <input type="checkbox" id="{{getCheckBoxId(min)}}" name="cronMinuteSpecificSpecific" value="{{min}}"
+             [checked]="isSpecific(min)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(min)}}" class="checkbox">{{twoCharsString(min)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let min of minDozen(40)">
+      <input type="checkbox" id="{{getCheckBoxId(min)}}" name="cronMinuteSpecificSpecific" value="{{min}}"
+             [checked]="isSpecific(min)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(min)}}" class="checkbox">{{twoCharsString(min)}}</label>
+    </span>
+  </div>
+  <div class="subsection">
+    <span *ngFor="let min of minDozen(50)">
+      <input type="checkbox" id="{{getCheckBoxId(min)}}" name="cronMinuteSpecificSpecific" value="{{min}}"
+             [checked]="isSpecific(min)" (change)="onSpecific($event)">
+      <label for="{{getCheckBoxId(min)}}" class="checkbox">{{twoCharsString(min)}}</label>
+    </span>
+  </div>
+</div>
+<div class="section">
+  <input type="radio" id="cronMinuteRange" name="cronMinute" [(checked)]="isMinuteRange" (change)="changeType($event)">
+  <label for="cronMinuteRange" class="checkbox">Every minute between minute
+    <select id="cronMinuteRangeStart" (change)="onRangeStart($event)">
+      <option *ngFor="let min of minutesArr" value="{{min}}" [selected]="isEqual(min, minuteRangeStart)">{{twoCharsString(min)}}</option>
+    </select>
+    and minute
+    <select id="cronMinuteRangeEnd" (change)="onRangeEnd($event)">
+      <option *ngFor="let min of minutesArr" value="{{min}}" [selected]="isEqual(min, minuteRangeEnd)">{{twoCharsString(min)}}</option>
+    </select>
+  </label>
+</div>

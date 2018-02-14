@@ -1,3 +1,5 @@
+import { SecondsComponent } from './cron/seconds/seconds.component';
+import { MonthsComponent } from './cron/months/months.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -23,18 +25,23 @@ import { SortableTableDirective } from './sortable-table.directive';
 import { SorttasksService } from './sorttasks.service';
 import { FindhistoryPipe } from './findhistory.pipe';
 import { FooterComponent } from './footer/footer.component';
-//import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CronComponent } from './cron/cron.component';
+import { DaysComponent } from './cron/days/days.component';
+import { MinutesComponent } from './cron/minutes/minutes.component';
+import { HoursComponent } from './cron/hours/hours.component';
+// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-export const appRoutes: Routes =[
+export const appRoutes: Routes = [
   { path: '', component: AppComponent},
   { path: 'tasks', component: TasksComponent},
   { path: 'history', component: HistoryfilterComponent},
+  {path: 'history/:id', component: HistoryComponent},
   { path: 'tasks/:token', component: TasksComponent},
   {path: 'details/:id', component: DetailsComponent},
   {path: 'tasks/details/:id', component: DetailsComponent},
-  {path: 'taskedit', component: DetailsEditComponent},   
-  {path: 'edit/:id', component: DetailsEditComponent}, 
-  {path: 'new', component: DetailsEditComponent},  
+  {path: 'taskedit', component: DetailsEditComponent},
+  {path: 'edit/:id', component: DetailsEditComponent},
+  {path: 'new', component: DetailsEditComponent},
   { path: '**', redirectTo: '/'}
 ];
 
@@ -55,16 +62,21 @@ export const appRoutes: Routes =[
     SortableTableDirective,
     FindhistoryPipe,
     FooterComponent,
-   
+    CronComponent,
+    DaysComponent,
+    MonthsComponent,
+    SecondsComponent,
+    MinutesComponent,
+    HoursComponent
   ],
-  imports: [   
+  imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MultiselectDropdownModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [TasksService,SortService,SorttasksService],
+  providers: [TasksService, SortService, SorttasksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

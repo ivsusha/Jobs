@@ -86,12 +86,12 @@
                       <td style="width:80px;"> <input type="text" class="form-control" name="dur" id="dur"  [(ngModel)]="dur"></td>
                       <td ><button class = "btn btn-light"(click)="onTransform({'tname':tname,'sdate':sdate,'edate':edate,'body':body,'status':status,'dur':dur})"><i class="fa fa-arrow-circle-down" ></i></button></td>
                     </tr>
-              <tr *ngFor="let history of myHistory.models |findhistory:mySearch">
+              <tr *ngFor="let history of myHistory['models'] |findhistory:mySearch">
                 <td>
-                  <a [routerLink]="['/details',history['taskId'] ]">{{history.taskName}} </a>
+                  <a [routerLink]="['/history',history['_id'] ]">{{history.taskName}} </a>
                 </td>
                 <td>{{history.StartDate}}</td>
-                <td>{{history.ResponseBody}}</td>
+                <td>{{history.ResponseBody.substring(0,30)+'...'}}</td>
                 <td>{{history.ResponseStatus}}</td>
                 <td>{{history.Duration}}</td>
                 <td></td>

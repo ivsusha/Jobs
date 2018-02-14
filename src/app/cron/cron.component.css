@@ -1,0 +1,17 @@
+li {
+  font-size: 1.0rem;
+}
+.hidden {
+  display: none;
+}
+input.totals {
+  padding-left: 5px;
+  min-width: 24rem;
+}
+div.totals {
+ font-size: 1.0rem;
+ font-weight: bold;
+}
+button.right {
+  float:right;
+}

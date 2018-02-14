@@ -4,65 +4,74 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class TasksService {
- tasksArray:{"models":[ {
-  "Body": "string",
-  "ConflictTasks": [
-    "string"
+ tasksArray: {'models': [ {
+  'Body': 'string',
+  'ConflictTasks': [
+    'string'
   ],
-  "Cron": "0 * * * * ?",
-  "Headers": {},
-  "MaxDuration": 15,
-  "ScheduledUrl": "string",
-  "TaskName": "string",
-  "_id": "string",
-  "_rev": "string"
-}],'pageToken':string}[]=[] ;
+  'Cron': '0 * * * * ?',
+  'Headers': {},
+  'MaxDuration': 15,
+  'ScheduledUrl': 'string',
+  'TaskName': 'string',
+  '_id': 'string',
+  '_rev': 'string'
+}], 'pageToken': string}[]= [] ;
 
 pageToken;
 pageTokenPrev;
 public header;
-public notLoad = false; 
   constructor(private http: Http ) { }
   getTasks(pattern) {
 
         const headers = new Headers({
-      'Content-Type': 'application/json;charset=UTF-8'   
-      }); 
-   if(pattern == null) return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/tasks', { headers: headers }));  
-    return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/tasks/'+pattern, { headers: headers }));
+      'Content-Type': 'application/json;charset=UTF-8'
+      });
+   if (pattern === null || pattern === undefined ) { return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/tasks',
+    { headers: headers })); }
+    return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/tasks/' + pattern, { headers: headers }));
   }
   getNextTasks(pattern) {
     const headers = new Headers({
-  'Content-Type': 'application/json;charset=UTF-8'   
+  'Content-Type': 'application/json;charset=UTF-8'
   });
- return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/tasks/'+pattern, { headers: headers }));  
+ return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/tasks/' + pattern, { headers: headers }));
 }
-getTaskbyId(id: string ){
-  if(id == null) return;
+getTaskbyId(id: string ) {
+  if (id === null) {return; }
   const headers = new Headers({
-    'Accept': 'application/json;charset=UTF-8'   
+    'Accept': 'application/json;charset=UTF-8'
     });
-    return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/'+id, { headers: headers })); 
+    return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/' + id, { headers: headers }));
 }
-submitTaskbyId(id: string ){
+submitTaskbyId(id: string ) {
   const headers = new Headers({
-    'Accept': 'application/json;charset=UTF-8'   
+    'Accept': 'application/json;charset=UTF-8'
     });
-    return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/submit/'+id, { headers: headers })); 
+    return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/submit/' + id, { headers: headers }));
 }
-saveTask(body,id,rev) { 
+disableTask(id: string) {
+  if (id === null) {return; }
+  const headers = new Headers({
+    'Accept': 'application/json;charset=UTF-8'
+    });
+    return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/disable/' + id, { headers: headers }));
+}
+saveTask(body, id, rev) {
  // const headers = new Headers({ 'Access': 'application/json;charset=utf-8'});
  const headers = new Headers();
 //  const headers = new Headers([{ 'Content-Type': 'application/json'}]);
   headers.append('Content-Type', 'application/json;charset=utf-8');
  const params = JSON.stringify(body);
-//const params = body;
+// const params = body;
 //  return (this.http.put('http://172.20.3.88:8080/api/scheduler/task/update/'+id +'/'+rev , params, { headers: headers }));
-if(body['_id'] == undefined) return (this.http.post('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/create', params, { headers: headers }));
-return (this.http.put('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/update/'+id +'/'+rev , params, { headers: headers }));
+if (body['_id'] === undefined) { return (this.http.post('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/create',
+ params, { headers: headers })); }
+return (this.http.put('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/update/' +
+ id + '/' + rev , params, { headers: headers }));
 
 }
-createTask(body){
+createTask(body) {
   const headers = new Headers();
 //  const headers = new Headers([{ 'Content-Type': 'application/json'}]);
   headers.append('Content-Type', 'application/json;charset=utf-8');
@@ -70,8 +79,8 @@ createTask(body){
 
 return (this.http.put('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/create', params, { headers: headers }));
 }
-getTasksArray(){return this.tasksArray};
-//setTasksArray(pageArray){ 
+getTasksArray() { return this.tasksArray; }
+// setTasksArray(pageArray){
  // this.pageToken = pageArray['pageToken'];
 //  if(this.pageToken== null) this.pageToken= "end";
 
@@ -79,52 +88,65 @@ getTasksArray(){return this.tasksArray};
 //  pageArray.models.map(
 ///    (item)=>{this.tasksArray['models'].push(item)}
 
-//  ) 
+//  )
 
  // this.tasksArray['pageToken'] = this.pageToken;
 
-//}
-setTasksArray(tasksArray){
+// }
+setTasksArray(tasksArray) {
   this.tasksArray = tasksArray;
 }
-deleteTask(id){
+deleteTask(id) {
   const headers = new Headers();
   headers.append('Content-Type', '*/*');
-  return (this.http.delete('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/delete/'+id, { headers: headers })); 
+  return (this.http.delete('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/delete/' + id, { headers: headers }));
 }
-getTaskStatus(id){
+getTaskStatus(id) {
   const headers = new Headers();
   headers.append('Content-Type', '*/*');
-  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/status/'+id, { headers: headers })); 
+  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/status/' + id, { headers: headers }));
 }
-runTask(id){
+runTask(id) {
   const headers = new Headers();
   headers.append('Content-Type', '*/*');
-  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/run/'+id, { headers: headers })); 
+  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/task/run/' + id, { headers: headers }));
 }
-getTaskHistorybyID(id){
+getTaskHistorybyID(id) {
   const headers = new Headers();
   headers.append('Content-Type', '*/*');
-  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/history/task/'+id, { headers: headers })); 
+  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/history/task/' + id, { headers: headers }));
 }
-getTaskHistorybyToken(id,token){
-  if(token == null) return;
+getTaskHistorybyToken(id, token) {
+  if (token === null) { return; }
   const headers = new Headers();
   headers.append('Content-Type', '*/*');
-  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/history/task/'+id +"/"+token, { headers: headers })); 
+  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/history/task/' + id + '/' + token, { headers: headers }));
 }
-getTaskAllHistory(){
+getTaskAllHistory() {
   const headers = new Headers();
   headers.append('Content-Type', '*/*');
-  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/histories', { headers: headers })); 
+  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/histories', { headers: headers }));
 }
-getCurrPage(){
+getHistorybyToken(id, token) {
+  if (token === null) { return; }
+  const headers = new Headers();
+  headers.append('Content-Type', '*/*');
+  return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/histories/' + token, { headers: headers }));
+}
+getHistorybyId(id: string ) {
+  if (id === null) { return; }
+  const headers = new Headers({
+    'Accept': 'application/json;charset=UTF-8'
+    });
+    return (this.http.get('https://ldd-scheduler-test.mybluemix.net/api/scheduler/history/' + id, { headers: headers }));
+}
+getCurrPage() {
   return this.pageToken;
 }
-getHeader(){
+getHeader() {
   return this.header;
 }
-setHeader(header){
+setHeader(header) {
   this.header = header;
 }
 }

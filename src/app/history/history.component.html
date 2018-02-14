@@ -1,38 +1,84 @@
-<app-task-header [myHeader]="header">  </app-task-header>
- <div class="container" >
+<div class="container">
+  <!--
   <div class="row">
-  <div class="col-xs-12">
+    <div class="col-xs-12 col-md-10  col-lg-10">
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="#">Tasks</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">View Task</li>
+      </ol>
+
+    </div>
+  </div>
+-->
+  <div class="row">
+    <div class="col-xs-6 col-md-8 col-lg-9">
+
+      <h3>
+        <span class="label info mybadge">Task {{historyArray.taskName}}</span>
+        <span class="label"></span>
+      </h3>
+   
+    </div>
+    <div class="col-xs-6 col-md-4 col-lg-3"> 
+        <div style="float: right;">        
      
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>           
-            <li class="breadcrumb-item active" aria-current="page">Tasks</li>
-          </ol>
-        
+     </div>
+    </div>
+
+
   </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <table class="table table-hover">     
+        <tbody>
+          <tr>
+            <td>Task name</td>
+            <td>{{historyArray.taskName}}</td>
+          </tr>         
+          <tr>
+            <td>Start date</td>
+            <td>{{historyArray.StartDate}}</td>
+          </tr> 
+          <tr>
+            <td>Duration</td>
+            <td>{{historyArray.Duration}}</td>
+          </tr> 
+          <tr>
+            <td>Response status</td>
+            <td>{{historyArray.ResponseStatus}}</td>
+          </tr>      
+          <tr>
+            <td>Response body</td>
+            <td>{{historyArray.ResponseBody}}</td>
+          </tr>
+          
+          <!--
+          <tr>
+            <td>Status</td>
+            <td>{{taskArray.ActiveStatus}}</td>
+          </tr>
+          
+          <tr>
+            <td>Do not run at the same time as</td>
+            <td></td>
+          </tr>
+        -->
+        </tbody>               
+      </table> 
+      <hr>    
+    </div>
   </div>
+  
+  <div class="row">
+    <div class="col-xs-12" style="padding:18px;">
+        <button type="button" class="btn btn-outline-secondary mybtn" (click)="onBack()">Back</button>    
+    </div>
   </div>
-<div class="container">    
-  <app-actions (onSearch)="onSearch($event)"> </app-actions>
-  <div class="table-responsive">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Task name</th>
-          <th>StartDate</th>
-          <th>Duration</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-        <tr *ngFor="let history of historyArray.models ">
-          <td>
-            <a  [routerLink]="['details', hist._id]"> {{history.TaskName}}</a>
-          </td>
-          <td>{{history.StartDate}}</td>
-          <td>{{history.Duration}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <button type="button" class="btn btn-primary" (click)="onNext()"  >Next Page</button>
 </div>

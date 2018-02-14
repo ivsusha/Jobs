@@ -7,13 +7,11 @@ import { TasksService } from '../tasks.service';
   templateUrl: './task-header.component.html',
   styleUrls: ['./task-header.component.css']
 })
-export class TaskHeaderComponent implements OnInit {
-  
-@Input() myHeader: string;
-  constructor(private tasksService: TasksService) { }
+export class TaskHeaderComponent  {
 
-  ngOnInit() {   
-  
-  }
+@Input() myHeader: string;
+  constructor(public tasksService: TasksService) { }
+
+
 
 }
